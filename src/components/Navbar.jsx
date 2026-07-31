@@ -19,16 +19,16 @@ export default function Navbar() {
 
   const opcionesMenu = [
     {
-      titulo: "Maquinaria",
-      items: ["Agrícola", "Aviación", "Repuestos", "Catálogo Completo"]
+      titulo: "Ejemplo 1",
+      items: ["Ejemplo 1.1", "Ejemplo 1.2", "Ejemplo 1.3"]
     },
     {
-      titulo: "Empresa",
-      items: ["Infraestructura", "Alianzas", "Trayectoria"]
+      titulo: "Ejemplo 2",
+      items: ["Ejemplo 2.1", "Ejemplo 2.2", "Ejemplo 2.3"]
     },
     {
-      titulo: "Contacto",
-      items: ["Disponibilidad", "Ubicación", "Soporte Técnico"]
+      titulo: "Ejemplo 3",
+      items: ["Ejemplo 3.1", "Ejemplo 3.2", "Ejemplo 3.3"]
     }
   ];
 
