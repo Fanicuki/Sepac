@@ -50,7 +50,6 @@ export default function HeroSlider() {
           <div style={styles.textContainer}>
             <h1 style={styles.logoGrande}>SEPAC</h1>
             <p style={styles.subtitulo}>{img.caption}</p>
-            <button style={styles.btnContacto}>Conocer Disponibilidad</button>
           </div>
         </div>
       ))}
@@ -115,19 +114,6 @@ const styles = {
     margin: '20px 0 30px 0',
     color: '#e2e8f0', // Grisáceo claro para combinar
     fontWeight: '300',
-  },
-  btnContacto: {
-    backgroundColor: '#ff6b00', // El color naranja solicitado
-    color: '#ffffff',
-    border: 'none',
-    padding: '12px 30px',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    transition: 'background 0.3s, transform 0.2s',
-    boxShadow: '0 4px 15px rgba(255,107,0,0.4)',
-    ':hover': { backgroundColor: '#e05e00' }
   },
   flecha: {
     position: 'absolute',
