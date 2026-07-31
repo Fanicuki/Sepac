@@ -1,0 +1,35 @@
+---
+// src/pages/index.astro
+import Navbar from '../components/Navbar.jsx';
+import HeroSlider from '../components/HeroSlider.jsx';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepac | Maquinaria Agrícola y Aviación</title>
+    <style>
+        /* Un pequeño reset global básico */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background-color: #f7f9f6; /* Fondo blanco grisáceo corporativo */
+        }
+    </style>
+</head>
+<body>
+
+    {/* Renderizado con activación de JavaScript en el cliente */}
+    <Navbar client:load />
+    <HeroSlider client:load />
+
+    {/* Próximas secciones estáticas (Infraestructura, Empresas aliadas, etc.) */}
+    <section style="padding: 80px 20px; max-width: 1200px; margin: 0 auto;">
+        <!-- Aquí irá la información estática del negocio que no requiere actualizaciones complejas -->
+    </section>
+
+</body>
+</html>
