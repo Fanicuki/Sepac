@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [submenuesAbiertos, setSubmenuesAbiertos] = useState({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,11 +18,27 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Estructura de menú
+  // Bloquear el scroll de la página cuando el cajón móvil esté abierto
+  useEffect(() => {
+    if (menuAbierto) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [menuAbierto]);
+
+  // Alternar apertura de submenús en modo celular
+  const toggleSubmenuMobile = (index) => {
+    setSubmenuesAbiertos((prev) => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   const opcionesMenu = [
     {
       titulo: "Sobre Nosotros",
-      link: "#sobre-nosotros" 
+      link: "#sobre-nosotros"
     },
     {
       titulo: "Extinción de Incendios",
@@ -33,11 +50,11 @@ export default function Navbar() {
     },
     {
       titulo: "Servicios",
-      link: "#servicios" 
+      link: "#servicios"
     },
     {
       titulo: "Contáctanos",
-      link: "#contacto" 
+      link: "#contacto"
     }
   ];
 
@@ -46,45 +63,126 @@ export default function Navbar() {
     : 'rgba(26, 32, 44, 0.3)';  
 
   return (
-    <nav style={{ ...styles.nav, backgroundColor: navBackground }}>
-      <div style={styles.navContainer}>
-        {/* Logo */}
-        <div style={styles.logo}>
-          SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+    <>
+      <nav style={{ ...styles.nav, backgroundColor: navBackground }}>
+        <div style={styles.navContainer}>
+          {/* Logo a la izquierda */}
+          <div style={styles.logo}>
+            SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+          </div>
+
+          {/* Botón menú hamburguesa (exclusivo celular) */}
+          <button 
+            style={styles.menuToggle} 
+            onClick={() => setMenuAbierto(true)}
+            aria-label="Abrir menú"
+          >
+            ☰
+          </button>
+
+          {/* MENÚ DE ESCRITORIO (Horizontal) */}
+          <ul style={styles.navLinks} className="nav-menu-desktop">
+            {opcionesMenu.map((opcion, index) => {
+              const tieneSubMenu = opcion.items && opcion.items.length > 0;
+
+              return (
+                <li key={index} style={styles.navItem} className={tieneSubMenu ? "dropdown-group" : "simple-group"}>
+                  {tieneSubMenu ? (
+                    <span style={styles.linkTitulo} className="menu-title">
+                      {opcion.titulo}
+                    </span>
+                  ) : (
+                    <a href={opcion.link || "#"} style={styles.linkTituloSimple} className="menu-title">
+                      {opcion.titulo}
+                    </a>
+                  )}
+                  
+                  {tieneSubMenu && (
+                    <ul style={styles.dropdown} className="dropdown-menu">
+                      {opcion.items.map((item, subIndex) => (
+                        <li key={subIndex} style={styles.dropdownItem}>
+                          <a href="#" style={styles.dropdownLink}>{item}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </nav>
+
+      {/* OVERLAY / FONDO OSCURO PARA MÓVIL */}
+      {menuAbierto && (
+        <div 
+          style={styles.overlay} 
+          onClick={() => setMenuAbierto(false)} 
+        />
+      )}
+
+      {/* CAJÓN DESLIZABLE MÓVIL (Side Drawer Vertical) */}
+      <div style={{
+        ...styles.drawer,
+        transform: menuAbierto ? 'translateX(0)' : 'translateX(100%)'
+      }}>
+        <div style={styles.drawerHeader}>
+          <div style={styles.logo}>
+            SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+          </div>
+          <button 
+            style={styles.closeBtn} 
+            onClick={() => setMenuAbierto(false)}
+            aria-label="Cerrar menú"
+          >
+            ✕
+          </button>
         </div>
 
-        {/* Botón menú hamburguesa (oculto en computadoras) */}
-        <button style={styles.menuToggle} onClick={() => setMenuAbierto(!menuAbierto)}>
-          {menuAbierto ? '✕' : '☰'}
-        </button>
-
-        {/* Contenedor de enlaces */}
-        <ul style={styles.navLinks} className={`nav-menu-desktop ${menuAbierto ? 'mobile-abierto' : ''}`}>
+        <ul style={styles.drawerList}>
           {opcionesMenu.map((opcion, index) => {
             const tieneSubMenu = opcion.items && opcion.items.length > 0;
+            const estaAbierto = submenuesAbiertos[index];
 
             return (
-              <li key={index} style={styles.navItem} className={tieneSubMenu ? "dropdown-group" : "simple-group"}>
-                {/* Si tiene sub-menú renderiza un span, si no, un enlace direct (<a>) */}
+              <li key={index} style={styles.drawerItem}>
                 {tieneSubMenu ? (
-                  <span style={styles.linkTitulo} className="menu-title">
-                    {opcion.titulo}
-                  </span>
+                  <>
+                    <div 
+                      style={styles.drawerTituloConSub} 
+                      onClick={() => toggleSubmenuMobile(index)}
+                    >
+                      <span>{opcion.titulo}</span>
+                      <span style={{ color: '#ff6b00', fontSize: '0.8rem' }}>
+                        {estaAbierto ? '▲' : '▼'}
+                      </span>
+                    </div>
+
+                    {/* Acordeón colapsable */}
+                    {estaAbierto && (
+                      <ul style={styles.drawerSubList}>
+                        {opcion.items.map((item, subIndex) => (
+                          <li key={subIndex} style={styles.drawerSubItem}>
+                            <a 
+                              href="#" 
+                              style={styles.drawerLink}
+                              onClick={() => setMenuAbierto(false)}
+                            >
+                              {item}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
                 ) : (
-                  <a href={opcion.link || "#"} style={styles.linkTituloSimple} className="menu-title">
+                  <a 
+                    href={opcion.link || "#"} 
+                    style={styles.drawerLink}
+                    onClick={() => setMenuAbierto(false)}
+                  >
                     {opcion.titulo}
                   </a>
-                )}
-                
-                {/* Cajita Desplegable Vertical: SOLO se renderiza si 'items' existe */}
-                {tieneSubMenu && (
-                  <ul style={styles.dropdown} className="dropdown-menu">
-                    {opcion.items.map((item, subIndex) => (
-                      <li key={subIndex} style={styles.dropdownItem}>
-                        <a href="#" style={styles.dropdownLink}>{item}</a>
-                      </li>
-                    ))}
-                  </ul>
                 )}
               </li>
             );
@@ -92,9 +190,8 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* CSS inyectado para asegurar el comportamiento horizontal en escritorio y el hover de subrayado */}
+      {/* CSS inyectado para hover de escritorio e invisibilidad de controles en mobile */}
       <style dangerouslySetInnerHTML={{__html: `
-        /* PANTALLAS DE COMPUTADORA */
         @media (min-width: 769px) {
           .nav-menu-desktop {
             display: flex !important;
@@ -102,14 +199,12 @@ export default function Navbar() {
             align-items: center !important;
           }
 
-          /* Muestra el dropdown vertical al pasar el cursor SOLO en los que tienen sub-menú */
           .dropdown-group:hover .dropdown-menu {
             display: block !important;
             opacity: 1;
             visibility: visible;
           }
           
-          /* Animación del subrayado naranja al pasar el cursor (Aplica para ambos tipos de menú) */
           .dropdown-group:hover .menu-title,
           .simple-group:hover .menu-title {
             color: #ff6b00 !important;
@@ -120,35 +215,16 @@ export default function Navbar() {
           }
         }
 
-        /* PANTALLAS MÓVILES (Celulares / Tablets) */
         @media (max-width: 768px) {
           .nav-menu-desktop {
-            display: none;
-            flex-direction: column !important;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background-color: #1a202c;
-            padding: 20px 0;
-            gap: 15px;
+            display: none !important;
           }
-          .mobile-abierto {
-            display: flex !important;
-          }
-          .dropdown-menu {
-            position: relative !important;
+          button[aria-label="Abrir menú"] {
             display: block !important;
-            box-shadow: none !important;
-            background: rgba(26, 32, 44, 0.5) !important;
-            padding-left: 20px !important;
-            border-top: none !important;
-            transform: none !important;
-            left: 0 !important;
           }
         }
       `}} />
-    </nav>
+    </>
   );
 }
 
@@ -175,13 +251,14 @@ const styles = {
     fontSize: '1.8rem',
     fontWeight: 'bold',
     letterSpacing: '1px',
+    color: '#ffffff',
   },
   menuToggle: {
     display: 'none',
     background: 'none',
     border: 'none',
     color: '#ffffff',
-    fontSize: '2rem',
+    fontSize: '1.8rem',
     cursor: 'pointer',
   },
   navLinks: {
@@ -242,5 +319,90 @@ const styles = {
     fontWeight: '400',
     fontSize: '0.95rem',
     transition: 'background 0.2s, color 0.2s',
+  },
+  
+  /* ESTILOS EXCLUSIVOS DEL MODO MÓVIL (DRAWER) */
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backdropFilter: 'blur(3px)',
+    zIndex: 1001,
+  },
+  drawer: {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    width: '80%',
+    maxWidth: '320px',
+    height: '100vh',
+    backgroundColor: '#1a202c',
+    zIndex: 1002,
+    transition: 'transform 0.3s ease-in-out',
+    boxShadow: '-5px 0 15px rgba(0,0,0,0.5)',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '20px',
+    boxSizing: 'border-box',
+    overflowY: 'auto',
+  },
+  drawerHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: '20px',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+  },
+  closeBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#ffffff',
+    fontSize: '1.5rem',
+    cursor: 'pointer',
+  },
+  drawerList: {
+    listStyle: 'none',
+    padding: '20px 0 0 0',
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  },
+  drawerItem: {
+    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    paddingBottom: '10px',
+  },
+  drawerTituloConSub: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    color: '#ffffff',
+    fontSize: '1.1rem',
+    fontWeight: '500',
+    cursor: 'pointer',
+    padding: '5px 0',
+  },
+  drawerLink: {
+    color: '#e2e8f0',
+    textDecoration: 'none',
+    fontSize: '1.1rem',
+    fontWeight: '500',
+    display: 'block',
+    padding: '5px 0',
+  },
+  drawerSubList: {
+    listStyle: 'none',
+    paddingLeft: '15px',
+    margin: '10px 0 0 0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    borderLeft: '2px solid #ff6b00',
+  },
+  drawerSubItem: {
+    padding: '2px 0',
   },
 };
