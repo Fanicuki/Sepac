@@ -17,18 +17,27 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Estructura de menú
   const opcionesMenu = [
     {
-      titulo: "Ejemplo 1",
-      items: ["Ejemplo 1.1", "Ejemplo 1.2", "Ejemplo 1.3"]
+      titulo: "Sobre Nosotros",
+      link: "#sobre-nosotros" 
     },
     {
-      titulo: "Ejemplo 2",
-      items: ["Ejemplo 2.1", "Ejemplo 2.2", "Ejemplo 2.3"]
+      titulo: "Extinción de Incendios",
+      items: ["SEPAC AGRO", "SEPAC INDUSTRIAL", "SEPAC NÁUTICO"]
     },
     {
-      titulo: "Ejemplo 3",
-      items: ["Ejemplo 3.1", "Ejemplo 3.2", "Ejemplo 3.3"]
+      titulo: "Aeródromos/Helipuertos",
+      items: ["AMG AYUDAS VISUALES", "KIT DE SALVAMENTO", "SEI"]
+    },
+    {
+      titulo: "Servicios",
+      link: "#servicios" 
+    },
+    {
+      titulo: "Contáctanos",
+      link: "#contacto" 
     }
   ];
 
@@ -39,7 +48,7 @@ export default function Navbar() {
   return (
     <nav style={{ ...styles.nav, backgroundColor: navBackground }}>
       <div style={styles.navContainer}>
-        {/* Logo a la izquierda */}
+        {/* Logo */}
         <div style={styles.logo}>
           SEPAC<span style={{ color: '#ff6b00' }}>.</span>
         </div>
@@ -49,24 +58,37 @@ export default function Navbar() {
           {menuAbierto ? '✕' : '☰'}
         </button>
 
-        {/* Contenedor de enlaces: Forzado a ser horizontal en escritorio */}
+        {/* Contenedor de enlaces */}
         <ul style={styles.navLinks} className={`nav-menu-desktop ${menuAbierto ? 'mobile-abierto' : ''}`}>
-          {opcionesMenu.map((opcion, index) => (
-            <li key={index} style={styles.navItem} className="dropdown-group">
-              <span style={styles.linkTitulo} className="menu-title">
-                {opcion.titulo}
-              </span>
-              
-              {/* Cajita Desplegable Vertical */}
-              <ul style={styles.dropdown} className="dropdown-menu">
-                {opcion.items.map((item, subIndex) => (
-                  <li key={subIndex} style={styles.dropdownItem}>
-                    <a href="#" style={styles.dropdownLink}>{item}</a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
+          {opcionesMenu.map((opcion, index) => {
+            const tieneSubMenu = opcion.items && opcion.items.length > 0;
+
+            return (
+              <li key={index} style={styles.navItem} className={tieneSubMenu ? "dropdown-group" : "simple-group"}>
+                {/* Si tiene sub-menú renderiza un span, si no, un enlace direct (<a>) */}
+                {tieneSubMenu ? (
+                  <span style={styles.linkTitulo} className="menu-title">
+                    {opcion.titulo}
+                  </span>
+                ) : (
+                  <a href={opcion.link || "#"} style={styles.linkTituloSimple} className="menu-title">
+                    {opcion.titulo}
+                  </a>
+                )}
+                
+                {/* Cajita Desplegable Vertical: SOLO se renderiza si 'items' existe */}
+                {tieneSubMenu && (
+                  <ul style={styles.dropdown} className="dropdown-menu">
+                    {opcion.items.map((item, subIndex) => (
+                      <li key={subIndex} style={styles.dropdownItem}>
+                        <a href="#" style={styles.dropdownLink}>{item}</a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -76,22 +98,24 @@ export default function Navbar() {
         @media (min-width: 769px) {
           .nav-menu-desktop {
             display: flex !important;
-            flex-direction: row !important; /* Fuerza la alineación horizontal de Maquinaria, Empresa, Contacto */
+            flex-direction: row !important;
             align-items: center !important;
           }
 
-          /* Muestra el dropdown vertical al pasar el cursor */
+          /* Muestra el dropdown vertical al pasar el cursor SOLO en los que tienen sub-menú */
           .dropdown-group:hover .dropdown-menu {
             display: block !important;
             opacity: 1;
             visibility: visible;
           }
           
-          /* Animación del subrayado naranja */
-          .dropdown-group:hover .menu-title {
+          /* Animación del subrayado naranja al pasar el cursor (Aplica para ambos tipos de menú) */
+          .dropdown-group:hover .menu-title,
+          .simple-group:hover .menu-title {
             color: #ff6b00 !important;
           }
-          .dropdown-group:hover .menu-title::after {
+          .dropdown-group:hover .menu-title::after,
+          .simple-group:hover .menu-title::after {
             width: 100% !important;
           }
         }
@@ -165,10 +189,10 @@ const styles = {
     margin: 0,
     padding: 0,
     gap: '35px',
-    marginLeft: 'auto', // Empuja todo el grupo a la derecha
+    marginLeft: 'auto',
   },
   navItem: {
-    position: 'relative', // Para que la cajita vertical se guíe de este título
+    position: 'relative',
     padding: '10px 0',
   },
   linkTitulo: {
@@ -180,20 +204,20 @@ const styles = {
     transition: 'color 0.3s ease',
     display: 'inline-block',
     paddingBottom: '4px',
-    // Estructura base de la línea invisible de subrayado
-    '::after': {
-      content: '""',
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      width: '0%',
-      height: '2px',
-      backgroundColor: '#ff6b00',
-      transition: 'width 0.3s ease',
-    }
+  },
+  linkTituloSimple: {
+    position: 'relative',
+    cursor: 'pointer',
+    fontWeight: '500',
+    fontSize: '1.05rem',
+    color: '#ffffff',
+    textDecoration: 'none',
+    transition: 'color 0.3s ease',
+    display: 'inline-block',
+    paddingBottom: '4px',
   },
   dropdown: {
-    display: 'none', // Oculto por defecto
+    display: 'none',
     position: 'absolute',
     top: '100%',
     left: '50%',
@@ -202,7 +226,7 @@ const styles = {
     listStyle: 'none',
     padding: '10px 0',
     margin: 0,
-    minWidth: '180px',
+    minWidth: '200px',
     boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
     borderRadius: '4px',
     borderTop: '3px solid #ff6b00',
@@ -218,9 +242,5 @@ const styles = {
     fontWeight: '400',
     fontSize: '0.95rem',
     transition: 'background 0.2s, color 0.2s',
-    ':hover': {
-      background: 'rgba(255, 107, 0, 0.15)',
-      color: '#ffffff',
-    }
   },
 };
