@@ -38,15 +38,23 @@ export default function Navbar() {
   const opcionesMenu = [
     {
       titulo: "Sobre Nosotros",
-      link: "sobre-nosotros"
+      link: "/sobre-nosotros"
     },
     {
       titulo: "Extinción de Incendios",
-      items: ["SEPAC AGRO", "SEPAC INDUSTRIAL", "SEPAC NÁUTICO"]
+      items: [
+        { nombre: "SEPAC AGRO", link: "/extincion/sepac-agro" },
+        { nombre: "SEPAC INDUSTRIAL", link: "/extincion/sepac-industrial" },
+        { nombre: "SEPAC NÁUTICO", link: "/extincion/sepac-nautico" }
+      ]
     },
     {
       titulo: "Aeródromos/Helipuertos",
-      items: ["AMG AYUDAS VISUALES", "KIT DE SALVAMENTO", "SEI"]
+      items: [
+        { nombre: "AMG AYUDAS VISUALES", link: "/aerodromos/amg" },
+        { nombre: "KIT DE SALVAMENTO", link: "/aerodromos/kit-salvamento" },
+        { nombre: "SEI", link: "/aerodromos/sei" }
+      ]
     },
     {
       titulo: "Servicios",
@@ -60,7 +68,7 @@ export default function Navbar() {
 
   const navBackground = scrolled 
     ? 'rgba(26, 32, 44, 0.95)' 
-    : 'rgba(26, 32, 44, 0.3)';  
+    : 'rgba(26, 32, 44, 0.4)';  
 
   return (
     <>
@@ -91,7 +99,7 @@ export default function Navbar() {
                 <li key={index} style={styles.navItem} className={tieneSubMenu ? "dropdown-group" : "simple-group"}>
                   {tieneSubMenu ? (
                     <span style={styles.linkTitulo} className="menu-title">
-                      {opcion.titulo}
+                      {opcion.titulo} <span style={{ fontSize: '0.65rem', marginLeft: '4px' }}>▼</span>
                     </span>
                   ) : (
                     <a href={opcion.link || "#"} style={styles.linkTituloSimple} className="menu-title">
@@ -101,9 +109,11 @@ export default function Navbar() {
                   
                   {tieneSubMenu && (
                     <ul style={styles.dropdown} className="dropdown-menu">
-                      {opcion.items.map((item, subIndex) => (
+                      {opcion.items.map((subitem, subIndex) => (
                         <li key={subIndex} style={styles.dropdownItem}>
-                          <a href="#" style={styles.dropdownLink}>{item}</a>
+                          <a href={subitem.link} style={styles.dropdownLink} className="dropdown-subitem">
+                            {subitem.nombre}
+                          </a>
                         </li>
                       ))}
                     </ul>
@@ -129,12 +139,11 @@ export default function Navbar() {
         transform: menuAbierto ? 'translateX(0)' : 'translateX(100%)'
       }}>
         <div style={styles.drawerHeader}>
-        <a href="/" style={styles.logoLink} onClick={() => setMenuAbierto(false)}>
-          <div style={styles.logo}>
-            SEPAC<span style={{ color: '#ff6b00' }}>.</span>
-          </div>
-        </a>
-  ...
+          <a href="/" style={styles.logoLink} onClick={() => setMenuAbierto(false)}>
+            <div style={styles.logo}>
+              SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+            </div>
+          </a>
           <button 
             style={styles.closeBtn} 
             onClick={() => setMenuAbierto(false)}
@@ -166,14 +175,14 @@ export default function Navbar() {
                     {/* Acordeón colapsable */}
                     {estaAbierto && (
                       <ul style={styles.drawerSubList}>
-                        {opcion.items.map((item, subIndex) => (
+                        {opcion.items.map((subitem, subIndex) => (
                           <li key={subIndex} style={styles.drawerSubItem}>
                             <a 
-                              href="#" 
+                              href={subitem.link} 
                               style={styles.drawerLink}
                               onClick={() => setMenuAbierto(false)}
                             >
-                              {item}
+                              {subitem.nombre}
                             </a>
                           </li>
                         ))}
@@ -195,8 +204,30 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* CSS inyectado para hover de escritorio e invisibilidad de controles en mobile */}
+      {/* CSS inyectado para hover de escritorio, reset y responsive */}
       <style dangerouslySetInnerHTML={{__html: `
+        nav *, nav *::before, nav *::after {
+          box-sizing: border-box !important;
+          margin: 0;
+          padding: 0;
+        }
+
+        .menu-title::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #ff6b00;
+          transition: width 0.3s ease;
+        }
+
+        .dropdown-subitem:hover {
+          background-color: #2d3748 !important;
+          color: #ff6b00 !important;
+        }
+
         @media (min-width: 769px) {
           .nav-menu-desktop {
             display: flex !important;
@@ -214,6 +245,7 @@ export default function Navbar() {
           .simple-group:hover .menu-title {
             color: #ff6b00 !important;
           }
+
           .dropdown-group:hover .menu-title::after,
           .simple-group:hover .menu-title::after {
             width: 100% !important;
@@ -241,8 +273,11 @@ const styles = {
     width: '100%',
     color: '#ffffff',
     zIndex: 1000,
-    transition: 'background-color 0.4s ease',
-    fontFamily: 'sans-serif',
+    transition: 'background-color 0.4s ease, backdrop-filter 0.4s ease',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.15)',
   },
   navContainer: {
     display: 'flex',
@@ -250,13 +285,16 @@ const styles = {
     alignItems: 'center',
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '15px 20px',
+    padding: '0 20px',
+    height: '75px',
+    width: '100%',
   },
   logo: {
     fontSize: '1.8rem',
-    fontWeight: 'bold',
+    fontWeight: '800',
     letterSpacing: '1px',
     color: '#ffffff',
+    lineHeight: 1,
   },
   logoLink: {
     textDecoration: 'none',
@@ -275,33 +313,39 @@ const styles = {
     listStyle: 'none',
     margin: 0,
     padding: 0,
+    display: 'flex',
     gap: '35px',
-    marginLeft: 'auto',
+    alignItems: 'center',
+    height: '100%',
   },
   navItem: {
     position: 'relative',
-    padding: '10px 0',
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
   },
   linkTitulo: {
     position: 'relative',
     cursor: 'pointer',
     fontWeight: '500',
-    fontSize: '1.05rem',
+    fontSize: '1rem',
     color: '#ffffff',
     transition: 'color 0.3s ease',
-    display: 'inline-block',
-    paddingBottom: '4px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '8px 0',
   },
   linkTituloSimple: {
     position: 'relative',
     cursor: 'pointer',
     fontWeight: '500',
-    fontSize: '1.05rem',
+    fontSize: '1rem',
     color: '#ffffff',
     textDecoration: 'none',
     transition: 'color 0.3s ease',
-    display: 'inline-block',
-    paddingBottom: '4px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '8px 0',
   },
   dropdown: {
     display: 'none',
@@ -311,15 +355,16 @@ const styles = {
     transform: 'translateX(-50%)',
     backgroundColor: '#1a202c', 
     listStyle: 'none',
-    padding: '10px 0',
+    padding: '8px 0',
     margin: 0,
-    minWidth: '200px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-    borderRadius: '4px',
+    minWidth: '210px',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.35)',
+    borderRadius: '0 0 6px 6px',
     borderTop: '3px solid #ff6b00',
   },
   dropdownItem: {
     padding: '0',
+    listStyle: 'none',
   },
   dropdownLink: {
     display: 'block',
@@ -327,11 +372,9 @@ const styles = {
     color: '#e2e8f0',
     textDecoration: 'none',
     fontWeight: '400',
-    fontSize: '0.95rem',
+    fontSize: '0.92rem',
     transition: 'background 0.2s, color 0.2s',
   },
-  
-  /* ESTILOS EXCLUSIVOS DEL MODO MÓVIL (DRAWER) */
   overlay: {
     position: 'fixed',
     top: 0,
@@ -358,6 +401,7 @@ const styles = {
     padding: '20px',
     boxSizing: 'border-box',
     overflowY: 'auto',
+    fontFamily: 'system-ui, -apple-system, sans-serif',
   },
   drawerHeader: {
     display: 'flex',
@@ -390,7 +434,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     color: '#ffffff',
-    fontSize: '1.1rem',
+    fontSize: '1.05rem',
     fontWeight: '500',
     cursor: 'pointer',
     padding: '5px 0',
@@ -398,7 +442,7 @@ const styles = {
   drawerLink: {
     color: '#e2e8f0',
     textDecoration: 'none',
-    fontSize: '1.1rem',
+    fontSize: '1.05rem',
     fontWeight: '500',
     display: 'block',
     padding: '5px 0',
