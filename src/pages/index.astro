@@ -2,6 +2,7 @@
 // src/pages/index.astro
 import Navbar from '../components/Navbar.jsx';
 import HeroSlider from '../components/HeroSlider.jsx';
+import Footer from '../components/Footer.jsx';
 ---
 
 <!DOCTYPE html>
@@ -31,5 +32,7 @@ import HeroSlider from '../components/HeroSlider.jsx';
         <!-- Aquí irá la información estática del negocio que no requiere actualizaciones complejas -->
     </section>
 
+    <!-- CONTENEDOR 3: Footer global -->
+    <Footer client:visible />
 </body>
 </html>

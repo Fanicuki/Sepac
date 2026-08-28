@@ -1,6 +1,7 @@
 ---
 // src/components/PageLayout.astro
 import Navbar from './Navbar.jsx';
+import Footer from './Footer.jsx';
 
 interface Props {
   titulo: string;
@@ -16,7 +17,7 @@ const { titulo } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{titulo} | SEPAC</title>
   </head>
-  <body style="margin: 0; padding: 0; background-color: #f1f5f9; min-height: 100vh; font-family: sans-serif;">
+  <body style="margin: 0; padding: 0; background-color: #f1f5f9; min-height: 100vh; font-family: sans-serif; display: flex; flex-direction: column;">
     
     <!-- CONTENEDOR 1: Encabezado oscuro (#1a202c) para Navbar y Título de Sección -->
     <header style="background-color: #1a202c; width: 100%; padding-top: 100px; padding-bottom: 40px; box-sizing: border-box; text-align: center;">
@@ -30,9 +31,12 @@ const { titulo } = Astro.props;
     </header>
 
     <!-- CONTENEDOR 2: Caja de información blanca tipo Box-Layout -->
-    <main style="max-width: 1100px; margin: 30px auto 60px auto; background-color: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; z-index: 10; color: #334155;">
+    <main style="max-width: 1100px; margin: -20px auto 60px auto; background-color: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; z-index: 10; color: #334155; flex: 1; width: 100%; box-sizing: border-box;">
       <slot />
     </main>
+
+    <!-- CONTENEDOR 3: Footer global -->
+    <Footer client:visible />
 
   </body>
 </html>
