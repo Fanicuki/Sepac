@@ -50,11 +50,11 @@ export default function Navbar() {
     },
     {
       titulo: "Servicios",
-      link: "#servicios"
+      link: "/servicios"
     },
     {
       titulo: "Contáctanos",
-      link: "#contacto"
+      link: "/contacto"
     }
   ];
 
