@@ -4,12 +4,12 @@ import React from 'react';
 export default function Footer() {
   // Array de marcas asociadas (puedes reemplazar 'src' por las imágenes de tu proyecto)
   const marcas = [
-    { id: 1, nombre: "Marca Agro 1", text: "AGRO-PARTNER" },
-    { id: 2, nombre: "Marca Avia 2", text: "AERO-TECH" },
-    { id: 3, nombre: "Marca Ind 3", text: "SAFETY-CORP" },
-    { id: 4, nombre: "Marca 4", text: "HELI-SERVICES" },
-    { id: 5, nombre: "Marca 5", text: "GLOBAL-SEI" },
-    { id: 6, nombre: "Marca 6", text: "AIR-SOLUTION" },
+    { id: 1, nombre: "Marca Agro 1", text: "EMPRESA-1" },
+    { id: 2, nombre: "Marca Avia 2", text: "EMPRESA-2" },
+    { id: 3, nombre: "Marca Ind 3", text: "EMPRESA-3" },
+    { id: 4, nombre: "Marca 4", text: "EMPRESA-4" },
+    { id: 5, nombre: "Marca 5", text: "EMPRESA-5" },
+    { id: 6, nombre: "Marca 6", text: "EMPRESA-6" },
   ];
 
   // Duplicamos la lista para lograr el bucle visual sin cortes
@@ -56,7 +56,7 @@ export default function Footer() {
               <span style={styles.icono}>📍</span> Buenos Aires, Argentina
             </li>
             <li style={styles.itemContacto}>
-              <span style={styles.icono}>📞</span> +54 (11) 4000-0000
+              <span style={styles.icono}>📞</span> +54 (11) 1234-5678
             </li>
             <li style={styles.itemContacto}>
               <span style={styles.icono}>✉️</span> contacto@sepac.com.ar
@@ -74,8 +74,8 @@ export default function Footer() {
             <li><a href="/sobre-nosotros" style={styles.link}>Sobre Nosotros</a></li>
             <li><a href="#extincion" style={styles.link}>Extinción de Incendios</a></li>
             <li><a href="#aerodromos" style={styles.link}>Aeródromos y Helipuertos</a></li>
-            <li><a href="#servicios" style={styles.link}>Servicios</a></li>
-            <li><a href="#contacto" style={styles.link}>Contáctanos</a></li>
+            <li><a href="/servicios" style={styles.link}>Servicios</a></li>
+            <li><a href="/contacto" style={styles.link}>Contáctanos</a></li>
           </ul>
         </div>
       </div>
