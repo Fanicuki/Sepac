@@ -66,10 +66,12 @@ export default function Navbar() {
     <>
       <nav style={{ ...styles.nav, backgroundColor: navBackground }}>
         <div style={styles.navContainer}>
-          {/* Logo a la izquierda */}
-          <div style={styles.logo}>
-            SEPAC<span style={{ color: '#ff6b00' }}>.</span>
-          </div>
+          {/* Logo a la izquierda con enlace a Inicio */}
+          <a href="/" style={styles.logoLink}>
+            <div style={styles.logo}>
+              SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+            </div>
+          </a>
 
           {/* Botón menú hamburguesa (exclusivo celular) */}
           <button 
@@ -127,9 +129,12 @@ export default function Navbar() {
         transform: menuAbierto ? 'translateX(0)' : 'translateX(100%)'
       }}>
         <div style={styles.drawerHeader}>
+        <a href="/" style={styles.logoLink} onClick={() => setMenuAbierto(false)}>
           <div style={styles.logo}>
             SEPAC<span style={{ color: '#ff6b00' }}>.</span>
           </div>
+        </a>
+  ...
           <button 
             style={styles.closeBtn} 
             onClick={() => setMenuAbierto(false)}
@@ -252,6 +257,11 @@ const styles = {
     fontWeight: 'bold',
     letterSpacing: '1px',
     color: '#ffffff',
+  },
+  logoLink: {
+    textDecoration: 'none',
+    color: 'inherit',
+    display: 'inline-block',
   },
   menuToggle: {
     display: 'none',
