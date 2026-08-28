@@ -38,7 +38,7 @@ export default function Navbar() {
   const opcionesMenu = [
     {
       titulo: "Sobre Nosotros",
-      link: "#sobre-nosotros"
+      link: "sobre-nosotros"
     },
     {
       titulo: "Extinción de Incendios",
