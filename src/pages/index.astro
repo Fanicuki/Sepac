@@ -3,6 +3,7 @@
 import Navbar from '../components/Navbar.jsx';
 import HeroSlider from '../components/HeroSlider.jsx';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/Seo.astro';
 ---
 
 <!DOCTYPE html>
@@ -10,7 +11,10 @@ import Footer from '../components/Footer.jsx';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sepac | Maquinaria Agrícola y Aviación</title>
+    <meta name="description" content="SEPAC. Equipos de extinción de incendios y ayudas visuales para el agro, la industria, la náutica y aeródromos.">
+    <Seo />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Sepac | Extinción de incendios y aeródromos</title>
     <style>
         /* Un pequeño reset global básico */
         body, html {

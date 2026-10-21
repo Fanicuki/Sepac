@@ -3,19 +3,17 @@ import React, { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [barraSolida, setBarraSolida] = useState(false);
   const [submenuesAbiertos, setSubmenuesAbiertos] = useState({});
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+    const actualizarBarra = () => {
+      const esInicio = window.location.pathname === '/';
+      setBarraSolida(!esInicio || window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    actualizarBarra();
+    window.addEventListener('scroll', actualizarBarra, { passive: true });
+    return () => window.removeEventListener('scroll', actualizarBarra);
   }, []);
 
   // Bloquear el scroll de la página cuando el cajón móvil esté abierto
@@ -66,8 +64,8 @@ export default function Navbar() {
     }
   ];
 
-  const navBackground = scrolled 
-    ? 'rgba(26, 32, 44, 0.95)' 
+  const navBackground = barraSolida
+    ? 'rgba(26, 32, 44, 0.98)'
     : 'rgba(26, 32, 44, 0.4)';  
 
   return (
@@ -228,7 +226,7 @@ export default function Navbar() {
           color: #ff6b00 !important;
         }
 
-        @media (min-width: 769px) {
+        @media (min-width: 981px) {
           .nav-menu-desktop {
             display: flex !important;
             flex-direction: row !important;
@@ -252,7 +250,7 @@ export default function Navbar() {
           }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 980px) {
           .nav-menu-desktop {
             display: none !important;
           }
@@ -334,6 +332,7 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     padding: '8px 0',
+    whiteSpace: 'nowrap',
   },
   linkTituloSimple: {
     position: 'relative',
@@ -346,6 +345,7 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     padding: '8px 0',
+    whiteSpace: 'nowrap',
   },
   dropdown: {
     display: 'none',
@@ -402,6 +402,7 @@ const styles = {
     boxSizing: 'border-box',
     overflowY: 'auto',
     fontFamily: 'system-ui, -apple-system, sans-serif',
+    textAlign: 'left',
   },
   drawerHeader: {
     display: 'flex',

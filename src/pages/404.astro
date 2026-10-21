@@ -1,0 +1,13 @@
+---
+import PageLayout from '../components/PageLayout.astro';
+---
+
+<PageLayout titulo="Página no encontrada" indexable={false}>
+  <div class="estado">
+    <p class="estado-etiqueta">Error 404</p>
+    <p>Esa dirección no existe en el sitio de SEPAC.</p>
+    <p style="margin-top: 1.25rem;">
+      <a href="/" style="color: #ff6b00; font-weight: 700; text-decoration: none;">Volver al inicio</a>
+    </p>
+  </div>
+</PageLayout>

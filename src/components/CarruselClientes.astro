@@ -1,0 +1,42 @@
+---
+const clientes = [
+  { nombre: 'Aerolíneas Argentinas', src: '/logos/aerolineas.png' },
+  { nombre: 'Austral', src: '/logos/austral.png' },
+  { nombre: 'Paladini', src: '/logos/paladini.png' },
+  { nombre: 'Quilmes', src: '/logos/quilmes.png' },
+  { nombre: 'Hospital Garrahan', src: '/logos/garrahan.jpg' },
+  { nombre: 'YPF', src: '/logos/ypf.png' },
+  { nombre: 'SECCO', src: '/logos/secco.png' },
+  { nombre: 'Helicenter', src: '/logos/helicenter.png' },
+  { nombre: 'Grupo Sancor Seguros', src: '/logos/sancorseguros.png' },
+  { nombre: 'Generadora Córdoba', src: '/logos/cordoba.jpg' },
+  { nombre: 'Murchison', src: '/logos/murchison.jpg' },
+  { nombre: 'Hospital Posadas', src: '/logos/posadas.png' },
+  { nombre: 'Servicio Penitenciario Federal', src: '/logos/penitenciario.jpg' },
+  { nombre: 'Verónica', src: '/logos/veronica.png' },
+  { nombre: 'Nucleoeléctrica Argentina', src: '/logos/nucleoelectrica.jpg' },
+  { nombre: 'ACTC', src: '/logos/actc.jpg' },
+];
+---
+
+<section class="clientes" aria-labelledby="clientes-titulo">
+  <h2 id="clientes-titulo">Clientes que confiaron</h2>
+  <div class="marquee">
+    <div class="marquee-pista">
+      <ul class="marquee-grupo">
+        {clientes.map((cliente) => (
+          <li class="logo-cliente">
+            <img src={cliente.src} alt={cliente.nombre} />
+          </li>
+        ))}
+      </ul>
+      <ul class="marquee-grupo" aria-hidden="true">
+        {clientes.map((cliente) => (
+          <li class="logo-cliente">
+            <img src={cliente.src} alt="" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

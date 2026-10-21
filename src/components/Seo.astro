@@ -1,0 +1,14 @@
+---
+interface Props {
+  indexable?: boolean;
+}
+
+const { indexable = true } = Astro.props;
+const site = Astro.site ?? new URL('https://sepacagroaereo.com');
+const path = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonical = new URL(path, site);
+---
+
+<meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'} />
+{indexable && <link rel="canonical" href={canonical.href} />}
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />

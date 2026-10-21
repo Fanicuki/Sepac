@@ -47,18 +47,91 @@ export default function HeroSlider() {
           }}
         >
           {/* Contenedor del nombre de la empresa e información llamativa */}
-          <div style={styles.textContainer}>
-            <h1 style={styles.logoGrande}>SEPAC</h1>
-            <p style={styles.subtitulo}>{img.caption}</p>
+          <div style={styles.textContainer} className="hero-texto">
+            <h1 style={styles.logoGrande} className="hero-titulo">SEPAC</h1>
+            <p style={styles.subtitulo} className="hero-subtitulo">{img.caption}</p>
           </div>
         </div>
       ))}
 
-      {/* Flechas de Navegación Manual */}
-      <button style={{ ...styles.flecha, left: '20px' }} onClick={anteriorImagen}>❮</button>
-      <button style={{ ...styles.flecha, right: '20px' }} onClick={siguienteImagen}>❯</button>
+      <button type="button" className="hero-flecha hero-flecha--izq" onClick={anteriorImagen} aria-label="Imagen anterior">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14.5 6.5 8.5 12l6 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      <button type="button" className="hero-flecha hero-flecha--der" onClick={siguienteImagen} aria-label="Imagen siguiente">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M9.5 6.5 15.5 12l-6 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
 
       {/* Indicadores inferiores (Puntitos) */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .hero-flecha {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 52px;
+          height: 52px;
+          display: grid;
+          place-items: center;
+          padding: 0;
+          color: #ffffff;
+          background: rgba(15, 23, 42, 0.62);
+          border: 1px solid rgba(255, 255, 255, 0.75);
+          border-radius: 50%;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+          cursor: pointer;
+          z-index: 10;
+          transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .hero-flecha--izq { left: 28px; }
+        .hero-flecha--der { right: 28px; }
+
+        .hero-flecha:hover {
+          background: #ff6b00;
+          border-color: #ff6b00;
+          transform: translateY(-50%) scale(1.06);
+        }
+
+        .hero-flecha:focus-visible {
+          outline: 2px solid #ffffff;
+          outline-offset: 3px;
+        }
+
+        @media (max-width: 640px) {
+          .hero-flecha {
+            width: 40px;
+            height: 40px;
+          }
+
+          .hero-flecha svg {
+            width: 18px;
+            height: 18px;
+          }
+
+          .hero-flecha--izq { left: 12px; }
+          .hero-flecha--der { right: 12px; }
+
+          .hero-texto {
+            padding-left: 58px !important;
+            padding-right: 58px !important;
+          }
+
+          .hero-titulo {
+            font-size: 2.8rem !important;
+            letter-spacing: 0.12em !important;
+          }
+
+          .hero-subtitulo {
+            font-size: 1.05rem !important;
+          }
+        }
+      `}} />
+
       <div style={styles.dotsContainer}>
         {imagenes.map((_, index) => (
           <span
@@ -114,20 +187,6 @@ const styles = {
     margin: '20px 0 30px 0',
     color: '#e2e8f0', // Grisáceo claro para combinar
     fontWeight: '300',
-  },
-  flecha: {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    background: 'rgba(0, 0, 0, 0.3)',
-    color: '#ffffff',
-    border: 'none',
-    fontSize: '2rem',
-    padding: '15px 20px',
-    cursor: 'pointer',
-    borderRadius: '50%',
-    zIndex: 10,
-    transition: 'background 0.3s',
   },
   dotsContainer: {
     position: 'absolute',

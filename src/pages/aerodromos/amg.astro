@@ -1,11 +1,35 @@
 ---
-// src/pages/extincion/amg.astro
 import PageLayout from '../../components/PageLayout.astro';
+
+const piezas = [
+  { imagen: '/equipos/L860-BIE.png', nombre: 'L860', detalle: 'Baja intensidad elevada' },
+  { imagen: '/equipos/L860-BI-SE.png', nombre: 'L860', detalle: 'Baja intensidad semi-empotrada' },
+  { imagen: '/equipos/L861-MIE.png', nombre: 'L861', detalle: 'Media intensidad elevada' },
+  { imagen: '/equipos/reflector-superficie.png', nombre: 'Reflector de superficie', detalle: '' },
+];
 ---
 
-<PageLayout titulo="AMG AYUDAS VISUALES - AERÓDROMOS/HELIPUERTOS">
-  <h2>Sistemas de Extinción para el Sector Agrícola</h2>
-  <p>
-    Equipamiento especializado en protección contra incendios en maquinaria agrícola, cosechadoras y campos.
-  </p>
+<PageLayout titulo="AMG Ayudas Visuales - Aeródromos/Helipuertos">
+  <div class="prosa">
+    <p>
+      Las ayudas visuales AMG son luminarias LED de fabricación enteramente nacional.
+    </p>
+    <p>
+      Fueron ensayadas por el CIC (homologada) y certificadas por la Administración Nacional de Aviación Civil (ANAC), respetando la circular técnica de balizamiento (CTB) y las RAAC vigentes.
+    </p>
+  </div>
+
+  <div class="galeria galeria--cuatro">
+    {piezas.map((pieza) => (
+      <article class="pieza">
+        <div class="ficha-visual">
+          <img src={pieza.imagen} alt={pieza.detalle ? `${pieza.nombre}, ${pieza.detalle}` : pieza.nombre} />
+        </div>
+        <div class="pieza-texto">
+          <h2>{pieza.nombre}</h2>
+          {pieza.detalle && <p>{pieza.detalle}</p>}
+        </div>
+      </article>
+    ))}
+  </div>
 </PageLayout>

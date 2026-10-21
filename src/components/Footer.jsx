@@ -2,14 +2,23 @@
 import React from 'react';
 
 export default function Footer() {
-  // Array de marcas asociadas (puedes reemplazar 'src' por las imágenes de tu proyecto)
   const marcas = [
-    { id: 1, nombre: "Marca Agro 1", text: "EMPRESA-1" },
-    { id: 2, nombre: "Marca Avia 2", text: "EMPRESA-2" },
-    { id: 3, nombre: "Marca Ind 3", text: "EMPRESA-3" },
-    { id: 4, nombre: "Marca 4", text: "EMPRESA-4" },
-    { id: 5, nombre: "Marca 5", text: "EMPRESA-5" },
-    { id: 6, nombre: "Marca 6", text: "EMPRESA-6" },
+    { nombre: "Aerolíneas Argentinas", src: "/logos/aerolineas.png" },
+    { nombre: "Austral", src: "/logos/austral.png" },
+    { nombre: "Paladini", src: "/logos/paladini.png" },
+    { nombre: "Quilmes", src: "/logos/quilmes.png" },
+    { nombre: "Hospital Garrahan", src: "/logos/garrahan.jpg" },
+    { nombre: "YPF", src: "/logos/ypf.png" },
+    { nombre: "SECCO", src: "/logos/secco.png" },
+    { nombre: "Helicenter", src: "/logos/helicenter.png" },
+    { nombre: "Grupo Sancor Seguros", src: "/logos/sancorseguros.png" },
+    { nombre: "Generadora Córdoba", src: "/logos/cordoba.jpg" },
+    { nombre: "Murchison", src: "/logos/murchison.jpg" },
+    { nombre: "Hospital Posadas", src: "/logos/posadas.png" },
+    { nombre: "Servicio Penitenciario Federal", src: "/logos/penitenciario.jpg" },
+    { nombre: "Verónica", src: "/logos/veronica.png" },
+    { nombre: "Nucleoeléctrica Argentina", src: "/logos/nucleoelectrica.png" },
+    { nombre: "ACTC", src: "/logos/actc.jpg" },
   ];
 
   // Duplicamos la lista para lograr el bucle visual sin cortes
@@ -23,9 +32,8 @@ export default function Footer() {
         <div style={styles.marqueeWrapper} className="marquee-wrapper">
           <div style={styles.marqueeTrack} className="marquee-track">
             {marcasInfinitas.map((marca, idx) => (
-              <div key={idx} style={styles.logoCard}>
-                {/* Cuando tengas las imágenes, usas: <img src={marca.logoUrl} alt={marca.nombre} /> */}
-                <span style={styles.logoPlaceholder}>{marca.text}</span>
+              <div key={idx} style={styles.logoCard} aria-hidden={idx >= marcas.length ? true : undefined}>
+                <img src={marca.src} alt={idx >= marcas.length ? "" : marca.nombre} style={styles.logoImagen} />
               </div>
             ))}
           </div>
@@ -56,13 +64,16 @@ export default function Footer() {
               <span style={styles.icono}>📍</span> Buenos Aires, Argentina
             </li>
             <li style={styles.itemContacto}>
-              <span style={styles.icono}>📞</span> +54 (11) 1234-5678
+              <span style={styles.icono}>📞</span>
+              <a href="tel:+5491164891525" style={styles.link}>+54 9 11 6489-1525</a>
             </li>
             <li style={styles.itemContacto}>
-              <span style={styles.icono}>✉️</span> contacto@sepac.com.ar
+              <span style={styles.icono}>📞</span>
+              <a href="tel:+5491169686646" style={styles.link}>+54 9 11 6968-6646</a>
             </li>
             <li style={styles.itemContacto}>
-              <span style={styles.icono}>✉️</span> ventas@sepac.com.ar
+              <span style={styles.icono}>✉️</span>
+              <a href="mailto:info@grupoaldes.net" style={styles.link}>info@grupoaldes.net</a>
             </li>
           </ul>
         </div>
@@ -72,8 +83,8 @@ export default function Footer() {
           <h4 style={styles.colTitulo}>NAVEGACIÓN</h4>
           <ul style={styles.listaLinks}>
             <li><a href="/sobre-nosotros" style={styles.link}>Sobre Nosotros</a></li>
-            <li><a href="#extincion" style={styles.link}>Extinción de Incendios</a></li>
-            <li><a href="#aerodromos" style={styles.link}>Aeródromos y Helipuertos</a></li>
+            <li><a href="/extincion/sepac-agro" style={styles.link}>Extinción de Incendios</a></li>
+            <li><a href="/aerodromos/amg" style={styles.link}>Aeródromos y Helipuertos</a></li>
             <li><a href="/servicios" style={styles.link}>Servicios</a></li>
             <li><a href="/contacto" style={styles.link}>Contáctanos</a></li>
           </ul>
@@ -101,12 +112,16 @@ export default function Footer() {
         .marquee-track {
           display: flex;
           width: max-content;
-          animation: marqueeScroll 20s linear infinite;
+          animation: marqueeScroll 35s linear infinite;
         }
 
         /* Pausa suave al pasar el cursor sobre los logos */
         .marquee-wrapper:hover .marquee-track {
           animation-play-state: paused;
+        }
+
+        footer a:hover {
+          color: #ff6b00;
         }
       `}} />
     </footer>
@@ -146,20 +161,21 @@ const styles = {
     gap: '40px',
   },
   logoCard: {
-    backgroundColor: '#1a202c',
-    padding: '15px 30px',
-    borderRadius: '6px',
+    backgroundColor: '#ffffff',
+    padding: '12px 18px',
+    borderRadius: '8px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: '160px',
-    border: '1px solid rgba(255, 255, 255, 0.05)',
+    width: '170px',
+    height: '78px',
+    boxSizing: 'border-box',
   },
-  logoPlaceholder: {
-    color: '#ff6b00',
-    fontWeight: 'bold',
-    fontSize: '0.95rem',
-    letterSpacing: '1px',
+  logoImagen: {
+    display: 'block',
+    width: '100%',
+    height: '52px',
+    objectFit: 'contain',
   },
   divider: {
     borderColor: 'rgba(255, 255, 255, 0.08)',

@@ -1,11 +1,34 @@
 ---
-// src/pages/extincion/kit-salvamento.astro
 import PageLayout from '../../components/PageLayout.astro';
+
+const piezas = [
+  { imagen: '/equipos/manta-ignifuga.png', nombre: 'Manta ignífuga', detalle: '' },
+  { imagen: '/equipos/barretas-halligans.png', nombre: 'Barretas Halligan', detalle: 'Rescate y entrada forzada' },
+  { imagen: '/equipos/corta-cinturon.png', nombre: 'Corta-cinturón', detalle: '' },
+];
 ---
 
-<PageLayout titulo="KIT DE SALVAMENTO - AERÓDROMOS/HELIPUERTOS">
-  <h2>Sistemas de Extinción para el Sector Agrícola</h2>
-  <p>
-    Equipamiento especializado en protección contra incendios en maquinaria agrícola, cosechadoras y campos.
-  </p>
+<PageLayout titulo="Kit de Salvamento - Aeródromos/Helipuertos">
+  <div class="prosa">
+    <p>
+      Los elementos de salvamento y rescate son fundamentales para preservar la integridad y seguridad de las personas ante cualquier incidente o accidente. Su disponibilidad y correcta utilización permiten actuar de manera rápida y efectiva frente a situaciones de emergencia.
+    </p>
+    <p>
+      Estos elementos contribuyen a minimizar los riesgos y mitigar las posibles consecuencias de un incidente, brindando herramientas esenciales para la asistencia, evacuación y rescate de personas en distintos escenarios de emergencia.
+    </p>
+  </div>
+
+  <div class="galeria galeria--tres">
+    {piezas.map((pieza) => (
+      <article class="pieza">
+        <div class="ficha-visual">
+          <img src={pieza.imagen} alt={pieza.nombre} />
+        </div>
+        <div class="pieza-texto">
+          <h2>{pieza.nombre}</h2>
+          {pieza.detalle && <p>{pieza.detalle}</p>}
+        </div>
+      </article>
+    ))}
+  </div>
 </PageLayout>
