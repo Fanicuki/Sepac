@@ -4,16 +4,21 @@ import React, { useState, useEffect } from 'react';
 export default function HeroSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Imágenes de demostración de alta calidad (Maquinaria agrícola y Aviación)
   const imagenes = [
     {
-      url: "https://images.unsplash.com/photo-1592965682824-879afa683ffee?w=1600&auto=format&fit=crop&q=80",
-      caption: "Tecnología de Vanguardia en Maquinaria Agrícola"
+      url: "/helipuertos/clinica-san-agustin.jpg",
+      alt: "Helipuerto de Clínica San Agustín de noche, con balizamiento verde",
+      caption: "Helipuerto de Clínica San Agustín",
+      logo: "/logos/san-agustin.jpg",
+      logoAlt: "Clínica San Agustín",
     },
     {
-      url: "https://images.unsplash.com/photo-1517976487492-5750f3195933?w=1600&auto=format&fit=crop&q=80",
-      caption: "Soluciones de Aviación e Infraestructura Global"
-    }
+      url: "/helipuertos/hospital-garrahan.jpg",
+      alt: "Helipuerto del Hospital Garrahan de noche, con balizamiento verde",
+      caption: "Helipuerto del Hospital Garrahan",
+      logo: "/logos/garrahan.jpg",
+      logoAlt: "Hospital Garrahan",
+    },
   ];
 
   // Efecto para el auto-desplazamiento cada 5 segundos
@@ -41,12 +46,13 @@ export default function HeroSlider() {
           key={index}
           style={{
             ...styles.slide,
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url(${img.url})`,
             opacity: index === currentIndex ? 1 : 0,
             visibility: index === currentIndex ? 'visible' : 'hidden',
           }}
         >
-          {/* Contenedor del nombre de la empresa e información llamativa */}
+          <img className="hero-foto" src={img.url} alt={img.alt} />
+          <div className="hero-velo" aria-hidden="true" />
+          <img className="hero-logo-hospital" src={img.logo} alt={img.logoAlt} />
           <div style={styles.textContainer} className="hero-texto">
             <h1 style={styles.logoGrande} className="hero-titulo">SEPAC</h1>
             <p style={styles.subtitulo} className="hero-subtitulo">{img.caption}</p>
@@ -67,6 +73,37 @@ export default function HeroSlider() {
 
       {/* Indicadores inferiores (Puntitos) */}
       <style dangerouslySetInnerHTML={{ __html: `
+        .hero-foto {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+
+        .hero-velo {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.42));
+          pointer-events: none;
+        }
+
+        .hero-logo-hospital {
+          position: absolute;
+          top: 96px;
+          left: 28px;
+          z-index: 3;
+          box-sizing: border-box;
+          width: 156px;
+          height: 92px;
+          padding: 8px 10px;
+          object-fit: contain;
+          background: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.32);
+        }
+
         .hero-flecha {
           position: absolute;
           top: 50%;
@@ -116,6 +153,14 @@ export default function HeroSlider() {
           .hero-flecha--izq { left: 12px; }
           .hero-flecha--der { right: 12px; }
 
+          .hero-logo-hospital {
+            top: 88px;
+            left: 14px;
+            width: 118px;
+            height: 70px;
+            padding: 6px 8px;
+          }
+
           .hero-texto {
             padding-left: 58px !important;
             padding-right: 58px !important;
@@ -163,14 +208,14 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     transition: 'opacity 1s ease-in-out, visibility 1s',
   },
   textContainer: {
+    position: 'relative',
+    zIndex: 2,
     textAlign: 'center',
     color: '#ffffff',
     padding: '0 20px',
