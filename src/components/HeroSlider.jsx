@@ -174,7 +174,7 @@ export default function HeroSlider() {
         }
 
         .hero-foto--1 { object-position: center 46%; }
-        .hero-foto--2 { object-position: 66% 50%; }
+        .hero-foto--2 { object-position: 32% 48%; }
         .hero-foto--3 { object-position: center 34%; }
         .hero-foto--4 { object-position: center 58%; }
 
@@ -319,9 +319,16 @@ export default function HeroSlider() {
           background: #ff6b00;
         }
 
+        @media (max-width: 760px) and (orientation: portrait) {
+          .hero {
+            height: auto;
+            aspect-ratio: 4 / 5;
+          }
+        }
+
         @media (max-width: 760px) {
           .hero-foto--1 { object-position: center 40%; }
-          .hero-foto--2 { object-position: 78% 44%; }
+          .hero-foto--2 { object-position: 24% 46%; }
           .hero-foto--3 { object-position: 46% 32%; }
           .hero-foto--4 { object-position: center 50%; }
 
@@ -356,7 +363,7 @@ export default function HeroSlider() {
         }
 
         @media (max-aspect-ratio: 3/4) {
-          .hero-foto--2 { object-position: 82% 48%; }
+          .hero-foto--2 { object-position: 12% 48%; }
           .hero-foto--3 { object-position: 42% 34%; }
         }
 

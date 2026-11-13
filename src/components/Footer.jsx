@@ -71,10 +71,6 @@ export default function Footer() {
               <span style={styles.icono}>📞</span>
               <a href="tel:+5491169686646" style={styles.link}>+54 9 11 6968-6646</a>
             </li>
-            <li style={styles.itemContacto}>
-              <span style={styles.icono}>✉️</span>
-              <a href="mailto:info@grupoaldes.net" style={styles.link}>info@grupoaldes.net</a>
-            </li>
           </ul>
         </div>
 
