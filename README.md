@@ -44,9 +44,3 @@ Rutas principales:
 - `/contacto`
 - `/extincion/sepac-agro`, `/extincion/sepac-industrial`, `/extincion/sepac-nautico`
 - `/aerodromos/sei`, `/aerodromos/amg`, `/aerodromos/kit-salvamento`
-
-## Publicación
-
-Se publica el contenido de `dist/`. `node_modules` queda fuera del repositorio (ver `.gitignore`).
-
-En Netlify, `netlify.toml` ya define el comando (`npm run build`), la carpeta (`dist`) y Node 22. En Cloudflare Pages se usa el mismo comando y la misma carpeta de salida. `public/_headers` viaja al build y aplica las cabeceras de seguridad.
