@@ -41,9 +41,9 @@ export default function Navbar() {
     {
       titulo: "Extinción de Incendios",
       items: [
-        { nombre: "SEPAC AGRO", link: "/extincion/sepac-agro" },
-        { nombre: "SEPAC INDUSTRIAL", link: "/extincion/sepac-industrial" },
-        { nombre: "SEPAC NÁUTICO", link: "/extincion/sepac-nautico" }
+        { nombre: "ECOSEI AGRO", link: "/extincion/sepac-agro" },
+        { nombre: "ECOSEI INDUSTRIAL", link: "/extincion/sepac-industrial" },
+        { nombre: "ECOSEI NÁUTICO", link: "/extincion/sepac-nautico" }
       ]
     },
     {
@@ -75,7 +75,7 @@ export default function Navbar() {
           {/* Logo a la izquierda con enlace a Inicio */}
           <a href="/" style={styles.logoLink}>
             <div style={styles.logo}>
-              SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+              GRUPO ALDES<span style={{ color: '#ff6b00' }}>.</span>
             </div>
           </a>
 
@@ -139,7 +139,7 @@ export default function Navbar() {
         <div style={styles.drawerHeader}>
           <a href="/" style={styles.logoLink} onClick={() => setMenuAbierto(false)}>
             <div style={styles.logo}>
-              SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+              GRUPO ALDES<span style={{ color: '#ff6b00' }}>.</span>
             </div>
           </a>
           <button 

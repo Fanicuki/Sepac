@@ -76,7 +76,7 @@ export default function HeroSlider() {
   ].filter(Boolean).join(' ');
 
   return (
-    <section className="hero" aria-roledescription="carrusel" aria-label="Trabajos de SEPAC">
+    <section className="hero" aria-roledescription="carrusel" aria-label="Trabajos de GRUPO ALDES">
       {imagenes.map((img, index) => {
         const activa = index === currentIndex;
         return (
@@ -111,7 +111,7 @@ export default function HeroSlider() {
       })}
 
       <h1 className={claseLogo}>
-        SEPAC<span>.</span>
+        GRUPO ALDES<span>.</span>
       </h1>
 
       <button type="button" className="hero-flecha hero-flecha--izq" onClick={anteriorImagen} aria-label="Imagen anterior">

@@ -48,7 +48,7 @@ export default function Footer() {
         <div style={styles.columna}>
           <a href="/" style={styles.logoLink}>
             <div style={styles.logo}>
-              SEPAC<span style={{ color: '#ff6b00' }}>.</span>
+              GRUPO ALDES<span style={{ color: '#ff6b00' }}>.</span>
             </div>
           </a>
           <p style={styles.descripcion}>
@@ -90,7 +90,7 @@ export default function Footer() {
       {/* 3. BARRA DE COPYRIGHT FINAL */}
       <div style={styles.copyrightBar}>
         <p style={{ margin: 0 }}>
-          © {new Date().getFullYear()} SEPAC. Todos los derechos reservados.
+          © {new Date().getFullYear()} GRUPO ALDES. Todos los derechos reservados.
         </p>
       </div>
 
