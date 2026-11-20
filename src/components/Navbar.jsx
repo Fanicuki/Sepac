@@ -49,7 +49,7 @@ export default function Navbar() {
     {
       titulo: "Aeródromos/Helipuertos",
       items: [
-        { nombre: "AMG AYUDAS VISUALES", link: "/aerodromos/amg" },
+        { nombre: "ECOSEI AYUDAS VISUALES", link: "/aerodromos/amg" },
         { nombre: "KIT DE SALVAMENTO", link: "/aerodromos/kit-salvamento" },
         { nombre: "SEI", link: "/aerodromos/sei" }
       ]

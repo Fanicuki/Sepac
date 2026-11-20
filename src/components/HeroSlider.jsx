@@ -1,6 +1,20 @@
 // src/components/HeroSlider.jsx
 import React, { useEffect, useState } from 'react';
 
+const imagenGarrahan = {
+  src: '/carrousel/1.jpeg',
+  alt: 'Helipuerto del Hospital Garrahan con balizamiento nocturno',
+  ancho: 1280,
+  alto: 720,
+  descripcion: 'Instalación de balizamiento y habilitación',
+  logo: { src: '/logos/garrahan.jpg', alt: 'Hospital Garrahan' },
+};
+
+/*
+  Carrusel original, apartado para reactivarlo más adelante.
+  Para volver a usarlo: reemplazar imagenGarrahan por este listado,
+  recorrer las imágenes y rehabilitar el intervalo, las flechas y los puntos.
+
 const imagenes = [
   {
     src: '/carrousel/1.jpeg',
@@ -32,9 +46,9 @@ const imagenes = [
     alto: 900,
   },
 ];
+*/
 
 export default function HeroSlider() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [logoVisible, setLogoVisible] = useState(false);
   const [logoEnEsquina, setLogoEnEsquina] = useState(false);
 
@@ -54,6 +68,8 @@ export default function HeroSlider() {
     };
   }, []);
 
+  /*
+    Rotación automática del carrusel, apartada junto con las otras imágenes.
   useEffect(() => {
     const intervalo = window.setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % imagenes.length);
@@ -68,6 +84,7 @@ export default function HeroSlider() {
   const anteriorImagen = () => {
     setCurrentIndex((prev) => (prev === 0 ? imagenes.length - 1 : prev - 1));
   };
+  */
 
   const claseLogo = [
     'hero-marca',
@@ -76,44 +93,33 @@ export default function HeroSlider() {
   ].filter(Boolean).join(' ');
 
   return (
-    <section className="hero" aria-roledescription="carrusel" aria-label="Trabajos de GRUPO ALDES">
-      {imagenes.map((img, index) => {
-        const activa = index === currentIndex;
-        return (
-          <figure
-            key={img.src}
-            className={activa ? 'hero-slide hero-slide--activa' : 'hero-slide'}
-            aria-hidden={activa ? undefined : true}
-          >
-            <img
-              className={`hero-foto hero-foto--${index + 1}`}
-              src={img.src}
-              alt={img.alt}
-              width={img.ancho}
-              height={img.alto}
-              draggable={false}
-              decoding="async"
-              fetchPriority={index === 0 ? 'high' : 'auto'}
-            />
-            {img.logo && (
-              <img
-                className="hero-cliente"
-                src={img.logo.src}
-                alt={img.logo.alt}
-                draggable={false}
-              />
-            )}
-            {img.descripcion && (
-              <figcaption className="hero-descripcion">{img.descripcion}</figcaption>
-            )}
-          </figure>
-        );
-      })}
+    <section className="hero" aria-label="Trabajos de GRUPO ALDES">
+      <figure className="hero-slide hero-slide--activa">
+        <img
+          className="hero-foto hero-foto--1"
+          src={imagenGarrahan.src}
+          alt={imagenGarrahan.alt}
+          width={imagenGarrahan.ancho}
+          height={imagenGarrahan.alto}
+          draggable={false}
+          decoding="async"
+          fetchPriority="high"
+        />
+        <img
+          className="hero-cliente"
+          src={imagenGarrahan.logo.src}
+          alt={imagenGarrahan.logo.alt}
+          draggable={false}
+        />
+        <figcaption className="hero-descripcion">{imagenGarrahan.descripcion}</figcaption>
+      </figure>
 
       <h1 className={claseLogo}>
         GRUPO ALDES<span>.</span>
       </h1>
 
+      {/*
+        Flechas y puntos del carrusel, apartados mientras hay una sola imagen.
       <button type="button" className="hero-flecha hero-flecha--izq" onClick={anteriorImagen} aria-label="Imagen anterior">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M14.5 6.5 8.5 12l6 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -137,6 +143,7 @@ export default function HeroSlider() {
           />
         ))}
       </div>
+      */}
 
       <style dangerouslySetInnerHTML={{ __html: `
         .hero {
